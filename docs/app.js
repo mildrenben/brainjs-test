@@ -24,7 +24,11 @@ function newForm () {
       button.onclick = () => {
         savedData.push(
           { 
-            input: rand, 
+            input: {
+              r: rand.r / 255,
+              g: rand.g / 255,
+              b: rand.b / 255
+            }, 
             output: { [button.textContent.toLowerCase()]: 1 }
           }
         )
@@ -71,15 +75,15 @@ function trainNet () {
 function calculate() {
   const rgb = hexToRgb(picker.value)
   const output = net.run({
-    r: rgb.r,
-    g: rgb.g,
-    b: rgb.b
+    r: rgb.r / 255,
+    g: rgb.g / 255,
+    b: rgb.b / 255
   })
   const dominant = getDominantColor(output)
   console.log('CALCULATING', savedData, picker.value, {
-    r: rgb.r,
-    g: rgb.g,
-    b: rgb.b
+    r: rgb.r / 255,
+    g: rgb.g / 255,
+    b: rgb.b / 255
   }, output)
   header.textContent = `I think this color is ${dominant.name}`
   details.textContent = JSON.stringify(output)
